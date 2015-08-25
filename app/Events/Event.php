@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace WiderFunnel\Events;
 
 abstract class Event
 {

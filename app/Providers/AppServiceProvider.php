@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace WiderFunnel\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

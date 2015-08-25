@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace WiderFunnel\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
