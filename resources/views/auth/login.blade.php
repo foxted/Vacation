@@ -1,39 +1,31 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
+@extends('base')
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-push-2">
-                <!-- resources/views/auth/login.blade.php -->
+@section('body')
+<section id="login" class="col-md-6 col-md-push-3 portal">
+    <fieldset>
+        <legend>Login</legend>
+        <form action="{{ route('auth.login.store') }}" method="POST">
+            {!! csrf_field() !!}
 
-                <form method="POST" action="/auth/login">
-                    {!! csrf_field() !!}
-
-                    <div>
-                        Email
-                        <input type="email" name="email" value="{{ old('email') }}">
-                    </div>
-
-                    <div>
-                        Password
-                        <input type="password" name="password" id="password">
-                    </div>
-
-                    <div>
-                        <input type="checkbox" name="remember"> Remember Me
-                    </div>
-
-                    <div>
-                        <button type="submit">Login</button>
-                    </div>
-                </form>
+            <div class="form-group">
+                <label for="email" class="label-control">Email</label>
+                <input type="email" name="email" value="{{ old('email') }}" class="form-control">
             </div>
-        </div>
-    </div>
-</body>
-</html>
+
+            <div class="form-group">
+                <label for="password" class="label-control">Password</label>
+                <input type="password" name="password" id="password" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" name="remember"> Remember Me
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Login</button>&nbsp;
+                <a href="{{ route('auth.register') }}" class="btn btn-default">Register</a>
+            </div>
+        </form>
+    </fieldset>
+</section>
+@stop
