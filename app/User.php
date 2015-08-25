@@ -41,4 +41,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->attributes['password'] = bcrypt($value);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role()
+    {
+        return $this->belongsTo(\WiderFunnel\Role::class);
+    }
+
 }

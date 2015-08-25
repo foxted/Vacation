@@ -7,6 +7,10 @@
         <form method="POST" action="{{ route('auth.register.store') }}">
             {!! csrf_field() !!}
 
+            @if(session('errors'))
+                {{ var_dump(session('errors')) }}
+            @endif
+
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" value="{{ old('name') }}" class="form-control">

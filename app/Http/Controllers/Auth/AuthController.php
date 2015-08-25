@@ -2,6 +2,7 @@
 
 namespace WiderFunnel\Http\Controllers\Auth;
 
+use WiderFunnel\Role;
 use WiderFunnel\User;
 use Validator;
 use WiderFunnel\Http\Controllers\Controller;
@@ -13,7 +14,7 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $redirectRoute = 'home';
+    protected $redirectPath = '/';
 
     /**
      * Create a new authentication controller instance.
@@ -46,10 +47,18 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        // Create user
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
         ]);
+
+        // Add role
+        $role = Role::whereSlug('employee')->first();
+        $user->role()->associate($role);
+        $user->save();
+
+        return $user;
     }
 }
