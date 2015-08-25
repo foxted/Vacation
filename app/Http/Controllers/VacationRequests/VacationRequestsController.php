@@ -5,6 +5,7 @@ namespace WiderFunnel\Http\Controllers\VacationRequests;
 use Auth;
 use Illuminate\Http\Request;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use WiderFunnel\Events\RequestStatusChanged;
 use WiderFunnel\Http\Controllers\Controller;
 use WiderFunnel\Http\Requests;
 use WiderFunnel\VacationRequest;
@@ -18,7 +19,9 @@ class VacationRequestsController extends Controller
      */
     public function index()
     {
-        //
+        $vacationRequests = VacationRequest::paginate(10);
+
+        return view('requests.index', compact('vacationRequests'));
     }
 
     /**
@@ -72,12 +75,17 @@ class VacationRequestsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  Request $request
-     * @param  int $id
+     * @param  VacationRequest $vacationRequest
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $vacationRequest)
     {
-        //
+        $vacationRequest->status = $request->get('status');
+        $vacationRequest->save();
+
+        event(new RequestStatusChanged($vacationRequest));
+
+        return back()->with('message', 'Success!');
     }
 
     /**

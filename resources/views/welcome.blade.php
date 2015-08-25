@@ -27,16 +27,7 @@
                         <td>{{ $request->id }}</td>
                         <td>{{ $request->start->toFormattedDateString() }}</td>
                         <td>{{ $request->end->toFormattedDateString() }}</td>
-                        <td>
-                            <span class="label
-                            @if($request->status == 'pending') label-warning
-                            @elseif($request->status == 'accepted') label-success
-                            @else label-danger
-                            @endif
-                            ">
-                                {{ ucwords($request->status) }}
-                            </span>
-                        </td>
+                        <td>@include('requests.partials.status', ['status' => $request->status])</td>
                         <td>
                             <form method="POST" action="{{ route('requests.destroy', $request) }}">
                                 {{ csrf_field() }}

@@ -28,8 +28,16 @@
                 <li>
                     <a href="{{ route('requests.create') }}"><i class="fa fa-plane"></i>&nbsp;Request vacation time</a>
                 </li>
+                @if(Auth::user()->is('admin') || Auth::user()->is('manager'))
+                <li>
+                    <a href="{{ route('requests.index') }}"><i class="fa fa-users"></i>&nbsp;Employee requests</a>
+                </li>
+                @endif
             </ul>
             @if(Auth::check())
+            <ul class="nav navbar-nav navbar-right">
+                <li><span class="badge" data-unread="0">0</span></li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
@@ -46,5 +54,21 @@
 
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    @if(Auth::check())
+        <script src="http://js.pusher.com/2.2/pusher.min.js"></script>
+        <script>
+            this.pusher = new Pusher('74b486fd22d27023d275');
+
+            this.pusherChannel = this.pusher.subscribe('user.' + '{{ Auth::id() }}');
+
+            this.pusherChannel.bind('WiderFunnel\\Events\\RequestStatusChanged', function(message) {
+                var badge = $('.notifications').find('span.badge');
+                var notificationNumber = parseInt(badge.data('unread'));
+                badge.data('unread', notificationNumber++);
+                badge.text(notificationNumber++);
+            });
+        </script>
+    @endif
+    @yield('scripts')
 </body>
 </html>

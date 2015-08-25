@@ -57,4 +57,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany(\WiderFunnel\VacationRequest::class);
     }
 
+    /**
+     * @param $roles
+     * @return bool
+     */
+    public function is($roles = [])
+    {
+        if(!is_array($roles))
+        {
+            $roles = explode(' ', $roles);
+        }
+
+        $allowed = false;
+        foreach($roles as $role) {
+            $allowed |= $this->role->slug == $role;
+        }
+
+        return $allowed;
+    }
+
 }

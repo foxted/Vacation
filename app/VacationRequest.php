@@ -10,7 +10,7 @@ class VacationRequest extends Model
 {
     protected $table = "requests";
 
-    protected $fillable = ['start', 'end'];
+    protected $fillable = ['start', 'end', 'status'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
