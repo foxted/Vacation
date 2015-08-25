@@ -15,4 +15,7 @@ Route::group(['middleware' => 'auth'], function(){
     // Home
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
+    // Requests
+    Route::resource('requests', 'VacationRequests\VacationRequestsController');
+
 });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use WiderFunnel\Http\Requests;
 use WiderFunnel\Http\Controllers\Controller;
+use WiderFunnel\VacationRequest;
 
 /**
  * Class HomeController
@@ -19,7 +20,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $vacationRequests = VacationRequest::forCurrentUser()->paginate(10);
+
+        return view('welcome', compact('vacationRequests'));
     }
     
 }

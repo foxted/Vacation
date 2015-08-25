@@ -1,45 +1,53 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
+@extends('layout')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
+@section('body')
+    <div class="jumbotron">
         <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
-            </div>
+            <h1>Vacation App</h1>
+            <p class="lead">You need a break, <a href="{{ route('requests.create') }}" class="btn btn-primary"> ask for vacation time now!</a></p>
         </div>
-    </body>
-</html>
+    </div>
+
+    @if($vacationRequests->count())
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Beginning</td>
+                    <td>End</td>
+                    <td>Status</td>
+                    <td></td>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($vacationRequests as $request)
+                    <tr>
+                        <td>{{ $request->id }}</td>
+                        <td>{{ $request->start->toFormattedDateString() }}</td>
+                        <td>{{ $request->end->toFormattedDateString() }}</td>
+                        <td>
+                            <span class="label
+                            @if($request->status == 'pending') label-warning
+                            @elseif($request->status == 'accepted') label-success
+                            @else label-danger
+                            @endif
+                            ">
+                                {{ ucwords($request->status) }}
+                            </span>
+                        </td>
+                        <td>
+                            <form method="POST" action="{{ route('requests.destroy', $request) }}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-times"></i>&nbsp;Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endif
+@stop
