@@ -3,6 +3,8 @@
 namespace WiderFunnel\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use WiderFunnel\Observers\RoleObserver;
+use WiderFunnel\Role;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Role::observe(RoleObserver::class);
     }
 
     /**
