@@ -13,8 +13,6 @@ Route::post('auth/register', ['as' => 'auth.register.store', 'uses' => 'Auth\Aut
 Route::group(['middleware' => 'auth'], function(){
 
     // Home
-    Route::get('/', function(){
-        return view('welcome');
-    });
+    Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 });
